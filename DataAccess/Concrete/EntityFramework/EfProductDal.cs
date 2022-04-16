@@ -1,6 +1,7 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,28 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfProductDal :EfEntityRepositoryBase<Product,NorthwindContext>, IProductDal
-    {   
+    public class EfProductDal : EfEntityRepositoryBase<Product, NorthwindContext>, IProductDal
+    {
         // using ile tab tab yapıp içine contextimizi tanımlıyoruz.
         // addedEntity isminde bir değişken tanımlayıp burada ilk sırada listede olan kayıdın referansını
         // alıyoruz. State ile durumu alıyoruz. EntityState ile de added yapıyoruz. Sonra "EntityState"
         // hata verecek onu using veriyoruz.
         // orayıda yazdıktan sonra Save yapıyoruz.
-
-       
-
-       
+        public List<ProductDetailDto> GetProductDetails()
+        {
+            using (NorthwindContext context =new NorthwindContext())
+            {
+                var result = from p in context.Products
+                             join c in context.Categories
+                             on p.CategoryId equals c.CategoryId
+                             select new ProductDetailDto 
+                             {
+                             ProductId=p.ProductId,ProductName=p.ProductName,
+                             CategoryName=c.CategoryName,UnitsInStock=p.UnitsInStock
+                             };
+                return result.ToList();
+               
+            }
+        }
     }
 }
