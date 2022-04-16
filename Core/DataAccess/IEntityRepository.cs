@@ -1,10 +1,10 @@
-﻿using Entities.Abstract;
+﻿using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace DataAccess.Abstract
+namespace Core.DataAccess
 {   // REPOSITORY 'i kısıtlama
     // class anahtarı : Burada referans tip olabilir anlamına gelir
     // IENTITY : IENTITY de olabilir veya bu veritabanı sınıflarını içeren sınıflar olabilir
